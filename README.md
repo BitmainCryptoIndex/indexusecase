@@ -1,4 +1,4 @@
-# **Connecting cryptocurrencies and dollars using Crypto Index **
+# Connecting cryptocurrencies and dollars using Crypto Index 
 
  
 
@@ -49,13 +49,13 @@ Note that Alice must also specify the granularity of amount of transferred funds
 
 When using the Crypto Index in smart contracts, it is easy to implement the verification the signature of index and timestamp, and perform arbitrary consequential operations thereafter. In what follows we discuss how to use the index in scripts.
 
-For example, Alice wants to send Bob some funds equal to $V$ dollars at the time when $1$ coin is worth about $1$ dollar, and promises Bob that he can claim $2V$ coins if the price goes down to threshold=$0.5$ dollar per coin before time $t_1$. (Of course, Alice can create more outputs to make the payment smoother or resort to smart contracts if possible, but for simplicity we only present a conceptual example script with two outputs.) The protocol works as follows:
+For example, Alice wants to send Bob some funds equal to $V$ dollars at the time when $1$ coin is worth about 1 dollar, and promises Bob that he can claim $2V$ coins if the price goes down to threshold=0.5 dollar per coin before time $t_1$. (Of course, Alice can create more outputs to make the payment smoother or resort to smart contracts if possible, but for simplicity we only present a conceptual example script with two outputs.) The protocol works as follows:
 
 1. Alice determines the value $V$ in dollars that she wants to send, the time period $(t_0,t_1)$ that she allows Bob to claim. 
 2. Then Alice gets the public key of Bob and the public key of an index publisher Tom that both of them trusts.
 3. With above information, Alice creates a funding transaction with two P2SH outputs as below. Alice makes sure that she has saved the recovery information in case of failure.
 4. The first output locks $V$ coins until time $t_1$. Bob can claim these funds at any time with his public key, and Alice can redeem the funds with her recovery key in case Bob does not claim by time $t_1$.
-5. The second output also locks $V$ coins until time $t_1$, after which Alice can redeem. Before $t_1$ Bob can claim the funds only by providing his public key together with an index signed by Tom showing that the exchange rate goes below $0.5$ dollar/coin in the period $(t_0, t_1)$.
+5. The second output also locks $V$ coins until time $t_1$, after which Alice can redeem. Before $t_1$ Bob can claim the funds only by providing his public key together with an index signed by Tom showing that the exchange rate goes below 0.5 dollar/coin in the period $(t_0, t_1)$.
 6. After the transaction is broadcasted and processed, Bob is allowed to claim $V$ coins in the first output immediately.
 7. Bob watches the index published by Tom. If the index goes below the threshold, Bob can use the timestamped and signed index to claim the $V$ coins in the second output.
 8. If the index never goes below the threshold by time $t_1$, then Bob cannot use the second output and Alice gets the funds back.
@@ -204,11 +204,11 @@ ENDIF
 
 The index published by a trusted index provider can also be used for on-chain financial derivatives product development by providing a trustworthy reference price. Take futures for an illustration:
 
-*Nov 1, 2018:* Alice bought $1$ lot of November BCH futures on an decentralized exchange at $\$300$/BCH, while Bob sold $1$ lot of November BCH futures at $\$300$/BCH, both parties decide to hold till expiry (i.e. *Nov 30*, *2018*). Suppose the futures contract will be cash settled on the contract expiry date, and will be settled against a trusted settlement price available at 10 AM on the expiry date.
+*Nov 1, 2018:* Alice bought 1 lot of November BCH futures on an decentralized exchange at $300/BCH, while Bob sold 1 lot of November BCH futures at $300/BCH, both parties decide to hold till expiry (i.e. *Nov 30, 2018*). Suppose the futures contract will be cash settled on the contract expiry date, and will be settled against a trusted settlement price available at 10 AM on the expiry date.
 
-*Nov 30, 2018 (final settlement day):* on 10 AM, a trusted third party index provider published a BCH price $\$310$/BCH. Then, the P/Ls on Alice's account should be $\$310-\$300=\$10$ (Profit) and Bob's account $\$300-\$310=-\$10$ (Loss).
+*Nov 30, 2018 (final settlement day):* on 10 AM, a trusted third party index provider published a BCH price $310/BCH. Then, the P/Ls on Alice's account should be $310-$300=$10 (Profit) and Bob's account $300-$310=-$10 (Loss).
 
-The logic of an on-chain smart contract handling this futures: it simply checks the date is already *Nov 30* and the BCH price \$310/BCH is signed by a predisgnated index provider, then computes the profit and loss of Alice and Bob, and divide the deposits respectively. After the final settlement day, either Alice or Bob (or anybody else) can invoke this contract by sending a transaction with the signed BCH price in the data field.
+The logic of an on-chain smart contract handling this futures: it simply checks the date is already *Nov 30* and the BCH price $310/BCH is signed by a predisgnated index provider, then computes the profit and loss of Alice and Bob, and divide the deposits respectively. After the final settlement day, either Alice or Bob (or anybody else) can invoke this contract by sending a transaction with the signed BCH price in the data field.
 
 Of course, a usable futures contract may have more complicated rules and must deal with boundary cases, *e.g.* the deposit of Bob (or Alice) is insufficient for the settlement. But the point of our futures contract example here is that the availability of a third party offchain index will allow the flurish of the on-chain financial product development.
 
